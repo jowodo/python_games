@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import math as m
 import random
-d=3
+d=2
 field=[]
 for i in range(d*d):
     field.append(i+1)
@@ -15,7 +15,7 @@ def print_field(field):
             if len(str(field[i*d+j])) == len(str(d*d)):
                 print ("|"+str(field[i*d+j]),end="")
             else:
-                print ("|"+" "*1+str(field[i*d+j]),end="")
+                print ("|"+" "*(len(str(d*d))-len(str(field[i*d+j])))+str(field[i*d+j]),end="")
         print("|")
 
 def draw_on_field(field,pos,char):
@@ -27,6 +27,21 @@ def get_position():
     print("Free fields: ", get_free_fields(field))
     return int(input("where do you want to draw? "))-1
 def game_running(field):
+    for sign in signs:
+#        print(sign)
+        for i in range(d):
+#            print(i)
+            # row or collumns
+            if all(cell == sign for cell in field[i*d:d*(i+1)]) or \
+                    all(cell == sign for cell in field[i:d*(d-1)+i+1:d]):
+                print(sign, "won!")
+                return False
+        # diagonals
+        if all(cell == sign for cell in field[0:d*d:d+1]) or \
+                all(cell == sign for cell in field [d-1:d*(d-1)+1:d-1]):
+            print(sign, "won!")
+            return False
+
     if len(get_free_fields(field)) == 0:
         return False
     return True
