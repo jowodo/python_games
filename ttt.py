@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 import math as m
 import random
-d=2
+#d=3
+try:
+    d =int(input("Size of field? "))
+except:
+    d=3
 field=[]
 for i in range(d*d):
     field.append(i+1)
@@ -60,7 +64,12 @@ def choose_sign():
 char,robochar=choose_sign()
 
 ###GAME 
+
 print_field(field)
+start = input("Do you wanna start? [yes/no] " )
+if start == "no":
+        draw_on_field(field,random.choice(get_free_fields(field))-1,robochar)
+
 while game_running(field): 
     draw_on_field(field,get_position(),char)
     if game_running(field):
